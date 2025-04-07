@@ -7,12 +7,12 @@ import re
 import json
 import base64
 import glob
-import requests
 from typing import Dict, Any, Set, Callable, Optional
 from datetime import datetime, timedelta
 from IPython.display import Image, display
 import shutil
 from tools.diagram import *
+from security import safe_requests
 
 def clone_repo(repo_url, target_dir):
     if not os.path.exists(target_dir):
@@ -640,7 +640,7 @@ def get_fastest_growing_repos(days_ago=7, top_n=10, print_info=False):
     }
     
     # Make the API request
-    response = requests.get(url, params=params)
+    response = safe_requests.get(url, params=params)
     repos = response.json()["items"]
     
     # Calculate growth rate (stars per day) and filter for Python repos
